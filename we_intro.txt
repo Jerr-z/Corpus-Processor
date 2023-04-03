@@ -1,0 +1,223 @@
+In this paper, we work with data collected from such patients encompassing manic, hypomanic, and remission stages.
+In this work, we propose a multimodal machine learning system that uses information from acoustic, linguistic, and visual modalities to classify the bipolar patients into remission, mania and hypomania classes.
+We evaluate our proposed multimodal approach using the Turkish Audio-Visual Bipolar Disorder corpus that we have recently collected and made available to the research community [3], [14], and push the state-of-the-art performance achieved on the corpus so far.
+2 RELATED WORK In this section, we first briefly summarize the main findings in the related area of multimodal depression analysis.
+Then we describe our dataset, before moving to a more technical exposition of specific works on BD estimation.
+2.2 The Turkish Audio-Visual Bipolar Disorder (BD) Corpus In this paper, we use the Turkish Audio-Visual Bipolar Disorder Corpus [14] 1 to report experimental results.
+Before discussing the related work performed on this corpus, we provide some details about the data.
+In our experiments, we have adhered to the 2018 AVEC Bipolar Disorder and Cross-cultural Affect Recognition Competition [3] protocol to ensure comparability of results with the literature.
+In this section, we summarize the feature extraction and machine learning approaches that were used for the mania level estimation problem.
+In the next section, we present a tri-modal system that advances the state of the art in this problem.
+Inspired by the success of applying syntactic information in the aspect-opinion pairs extraction task [11], [12], we introduce the syntactic knowledge structure to capture the relational features between the aspect and opinion terms for the cross-domain learning, aiming to solve the sentiment transfer error problem.
+As we can observe, the terms with similar semantics usually share the relational knowledge structures.
+In this paper, we propose an aspect-opinion correlation aware and knowledge-expansion few-shot cross-domain sentiment classification model (AKFSM).
+For this problem, we propose an aspect-opinion correlation aware and knowledge-expansion few-shot cross-domain sentiment classification model.
+In our paper, we propose a few-shot learning based cross-domain sentiment classification model to effectively address the problem of ignoring domain-specific features.
+Thus, we could preliminarily locate the possible area of emotion causes, namely two alternative cause regions (i.e., clause 1-4 and clause 4-6).
+Further, with the causal narrative, we could efficiently mine emotional causal correlations between the result clause and other clauses for the ECE task.
+Consequently, we in this paper focus on causal narrative comprehension and exploring the emotional semantics correlations within causal narratives for better emotion cause extraction.
+For one thing, we leverage the causal structure of causal narrative to perceive the possible scope of emotion cause clauses.
+For another, based on the guidance of causal structure, we focus on the clauses that have strong causal correlations with the known emotion result clause in a causal narrative to predict emotion cause clauses.
+To achieve the above solutions, we must consider the following challenges: 1) How to properly represent the textual causal structure via the causal narrative understanding of a document; 2) Under the guidance of causal narrative, how to explore and understand the causal association between cause clauses and result clauses within the document for emotion cause extraction.
+To address the above challenges, in this paper, we propose a Causal Narrative Comprehension Model (CNCM) for emotion cause extraction.
+For the first challenge, we design a Narrative-aware Causal Association (NCA) unit, which uses the narrative cue about the known emotion result to learn the semantic correlation between causes and results for causal narrative representation.
+For the second challenge, we develop a Result-aware Emotional Attention (REA) unit to acquire the cognition of emotional causal correlation through the attention mechanism between the known result clause and other clauses within the causal narrative.
+With this preliminary cognition, we utilize the NCA unit for the representation of causal narrative structure for good comprehension of causality and perception about the possible scope of cause clauses.
+Then we utilize REA to help understand the emotional causal correlations guided by the causal narrative information.
+In this way, we can grasp causality and identify the emotion causes of documents accurately.
+Then, in Section 4, we demonstrate the model details and training techniques of the developed CNCM.
+Finally, we conclude this paper in Section 6.
+2 RELATED WORK In this section, we will review the related works from three aspects: Emotion Analysis, Emotion Cause Extraction and Narrative Understanding, which are closely related to our work in this paper.
+Thus, we regard clause 4 as result clause and aim to find out the cause clause (i.e., clause 3) among all the clauses in this text.
+Unlike the above studies, in this paper, we deal with this task as an issue of causal narrative comprehension for documents.
+Particularly, we dig deeply into documents information to subtly model causal narratives of 1. https: //weibo.com/ documents.
+In this way, we can efficiently localize emotion CAO ET AL.
+Inspired by these studies, we introduce the idea of narrative understanding into the ECE task.
+In MDEE, we consider emotion estimation in the 3D Valance-Arousal-Dominance space.
+Given an emotional sample that is predicted to have low valence, high arousal, and low dominance, e.g., a sample with fear emotion, we can calculate its label inconsistency in the Dominance dimension using the labeled dataset, based on its estimated labels in the other two dimensions.
+First, we identify the labeled samples that have similar Valence and Arousal values with this sample and check their Dominance labels.
+Similarly, we can obtain its label inconsistency with the labeled dataset in Valence and Arousal.
+Aggregating the label inconsistency in all three dimensions, we obtain the sample ’ s total inconsistency with the labeled dataset.
+For SECE, we measure the label inconsistency differently, since additional categorical labels are available.
+Based on this informativeness measure, we further propose an inconsistency-based multi-task cooperative learning (IMCL) framework that integrates AL and SSL.
+2) Based on the inconsistency measure, we further propose IMCL, a multi-task cooperative learning framework that integrates AL and SSL.
+Here we focus on a subset of this population, abbreviated as mv *, who have fewer than 20 words or word approximations and limited expressive language through speech and writing.
+In our prior work [4], we developed a novel longitudinal data collection process to collect real-world audio with in-the-moment labels provided by a close family member or caregiver.
+Here we extend our previous work, presenting new analytical approaches applied to a larger number of vocalizations from more individuals.
+In this paper, we present the results of the largest realworld nonverbal vocalization classification experiments to date with vocalizations by eight mv * communicators.
+In this work, we use the term verbal speech to specify speech with typical verbal content, which is different from nonverbal speech which is also richly expressive and communicative (as from mv * communicators) but may not contain verbal content like words or phrases.
+In our prior work, we describe in detail the participatory design process used to design our approach [61], our novel data collection system [4], [62], and provide preliminary classification results with three mv * communicators [4].
+Here we extend this work to include new analytical approaches for classification with eight mv * communicators, and discuss our experimental results in the context of real-world data collection.
+Hence, in this work, we focus on learning optical flow specialized for faces, which we will attempt to constrain the algorithm to learn only lifelike expressions on faces.
+In doing so, we explore how well a deep network can perform in this task.
+Finally, we test the usefulness of our network by using the learned optical flow predictions for micro-expression detection using optical flow and the Shallow Triple Stream Threedimensional CNN (STSTNet) [8].
+And finally, we present the concluding remarks and recommendations for improvement and future work in Section 6.
+2 RELATED WORK First, we discuss works related to optical flow estimation using classical and deep learning techniques, along with some of the common challenges.
+For our experiments, we use the FlowNetS architecture adapted from [6] to train on our dataset.
+By demonstrating how we can adapt FlowNetS to perform well on datasets consisting of only faces, we can later improve even further by training more advanced architectures on such datasets.
+[22] used the pyramid-structure CNN architecture PWC-Net for optical flow prediction, which we use in this work to test on the face optical flow dataset as a benchmark implementation and compare with our performance.
+Another optical flow CNN we use for comparison in this work is LiteFlowNet by Hui et al.
+Our work can be considered to be a contribution to the study of optical flow ’ s effects on CNNs, with the difference being that we focus on facial datasets instead.
+One key difference between our work and theirs is that we incorporate a cyclic loss to test how well the flow fields reconstruct the second image in the image pairs.
+Additionally, the training data we generate is based upon the BP4D-Spontaneous dataset, which is specifically tuned to exhibit various emotions and thus more specialized for expression recognition tasks.
+In addition, we also test our network ’ s performance on microexpression detection.
+We introduce a noisy optical flow dataset, that we generate using the motion of sparse facial landmarks.
+In addition, we demonstrate the usefulness of our approach by applying it for micro-expression detection.
+They also use apex and onset frames in [8] to compute optical flow along with an added feature, the optical strain, as input to STSTNet, which we adapt in this work to test for micro-expression recognition.
+After having reviewed several related works, we now describe the dataset preparation in our work.UNDERSTANDING and recognizing human facial emotional expressions has been an attractive research topic for decades, lying in the intersection area of affective science and human-computer interaction.
+In this paper, we aim at studying the FER problem on a semantic-rich level.
+Different from the previous methods that simply blend or add more emotion classes to enhance the FER quality, we thoroughly exploit the linguistic space and leverage a reasonable lexicon to describe the emotion  Keyu Chen, Changjie Fan, Wei Zhang, and Yu Ding are with Netease Fuxi AI Lab, Beijing 100084, China.
+Inspired by previous psychological research [7], we extend the recognizable emotions to an exhaustive set, covering 135 English words which can semantically describe most of all distinctive emotional feelings or inner statements of humankind.
+Accordingly, we argue that the 135-class emotion model is desirable for semantic-rich FER research.
+Based on the 135-class emotion model, we construct a large-scale FER dataset in a labor-free manner.
+First, we use the 135 emotion terms as class labels, collect more than one million web images from the internet.
+Then, we design an automatic data cleaning process by efficiently evaluating the expression consistency of the collected images.
+To evaluate the label credibility of our categorical dataset, we set up a manual verification test in which multiple participants are required to give their judgments on given images and different emotion labels.
+In this way, we successfully build up the Emo135 dataset, which contains 135 emotion categories and 728,946 facial images in total.
+Next, we propose a baseline method to validate the feasibility of conducting FER on the semantic-rich representation.
+Finally, we make the weight matrices as prior knowledge and inject them into the recognition network training softly.
+In order to capture automatically both short- and longrange relations at the same time, we apply Multi-head Selfattention Mechanism (MSM) instead of a Convolutional Kernel as the cornerstone of our deep learning MER architecture.
+In this work we show how a transformer based deep learning architecture can be applied to MER in a manner which outperforms the current state of the art.
+The main contributions of the present work are as follows: 1) We propose a novel spatio-temporal deep learning transformer framework for video based microexpression recognition, which we name Short and Long range relation based Spatio-Temporal Transformer (SLSTT), the structure whereof is summarized in Fig.
+Some go further and employ temporal frame interpolation (as indeed we do herein) so as to increase the frame count [6], [9], [10], [12], [39].
+However, none of the existing approaches to microexpression recognition adequately make use of both the spatial and temporal information due to the design difficulties posed by the challenges we discussed in the previous sections.Acore challenge of affective computing (AC) is the investigation of generality in the ways emotions are elicited and manifested, in the annotation protocols designed, and ultimately in the affect models created.
+Motivated by the lack of corpora for the study of general properties of affect across tasks and participants, in this paper we introduce The Arousal video Game AnnotatIoN (AGAIN) dataset, which contains data from over 120 participants who played and annotated over 1,000 gameplay sessions.
+While the Circumplex model and the PAD model represent affect across two and three dimensions, respectively, in the AGAIN dataset we focus currently on soliciting annotations based on the dimension of arousal.
+In this paper, we divide them into three types: (1) the emotion labels of context utterances, (2) the semantics carried by the actual content of utterances (e.g., topic or dialogue intent), and (3) the relationship between speakers, i.e., intra/ inter-speaker influence.
+For the convenience of presentation, we refer the first two collectively to as semantic context, and the third as structure context.
+In order to fill this gap, we conduct an empirical study on four representative CER methods to further explore what the models actually learn from the conversational context, which are reported in more detail in Sections 4 and 6.6.
+Specifically, for each target utterance, we replace its context utterances with different content that yet carry the same emotions as the original ones.
+To alleviate the problems mentioned above, we further propose a semantic-guided context-enhanced mechanism to regularize a CER model and facilitate a more effective understanding of conversational context.
+In this sense, we call u4 as ” context-relevant ”.
+In this paper, we incorporate the above ideas into a contrastive learning scheme, and propose a contrastive contextaware CER method, namely C3ER, to augment a CER framework.
+Then we take the target utterance itself and its subsequent ones within a certain proximity as the context-relevant (positive) samples, and randomly sample context-irrelevant utterances from other conversations in the dataset (termed as “ cross-dialogues ”) as the negative samples, to construct contrast pairs.
+According to its historical utterances u1 to u3, we can infer that the conversation is talking about “ name ”, instead of “ camera ”, “ coffee ” or “ TV ”.
+And then, we choose four representative CER methods as baselines to conduct a empirical study in Section 4, and describe the details of the proposed method in Section 5.
+Finally, we conclude the paper in Section 7 and discuss the promising directions for future research in Section 8.
+To the best of our knowledge, we are the first to use contrastive learning in CER.
+Different from the existing CER models which mainly focus on developing new neural network structures for performance improvement, we create a semantic context modelling method using contrastive learning to enhance a CER model, which can be incorporated into and jointly learnt with any existing CER framework to improve the classification accuracy and robustness.1 INTRODUCTION SOCIAL robots are becoming more integrated into our daily lives, with an increasing prevalence in human environments such as schools, museums and hospitals.
+In this work, we aim to train an agent for non-verbal behaviors (smiles and nods) as backchannels which maximizes user engagement.
+We evaluate our proposed multimodal approach using the Turkish Audio-Visual Bipolar Disorder corpus that we have recently collected and made available to the research community [3], [14], and push the state-of-the-art performance achieved on the corpus so far.
+We discuss our results extensively in the light of our quantitative findings, provide insights and point out to challenges in this problem.
+We discuss our findings in Section 5 and provide some final remarks.
+We caution the reader that the reported accuracies in these works (including the present paper) are not clinical results, but a good indication of the possibilities of automatic analysis approaches.
+Our contributions are summarized as follows:  We explore a problem of cross-domain sentiment classification in the few-shot scenario.
+ We design an aspect-opinion correction aware graph feature learning method with two self-supervised pre-trained tasks to solve the sentiment transfer error problem suffered in existing unsupervised domainadaptation methods.
+ We propose a knowledge-expansion few-shot crossdomain sentiment classification model.
+As an emphasis, the main contributions of our work can be concluded as follows:  We propose a model based on causal narrative comprehension for emotion cause extraction.
+ We develop NCA to analyze and model the causal narrative information of ECE documents.
+The contributions of this paper are: 1) We propose an informativeness measure to represent the inconsistency between the estimated labels of unlabeled samples and the true label distribution of labeled samples.
+We show that nonverbal vocalizations can be classified using audio alone for each individual.
+We present evaluation and sampling strategies to work with messy, real-world data with uneven sample distributions and varying background noise.
+We implement and evaluate a custom feature set designed for nonverbal vocalizations for mv * individuals.
+We also analyze the data collection and labeling practices for each participant, and discuss model performance in the context of how data was collected by each participant.
+We demonstrate that the proposed architecture will work well for faces compared and compare it to traditional optical flow algorithms.
+We use the BP4D-Spontaneous dataset [5] consisting of videos of 41 participants with different facial expressions to generate the ground-truth optical flow between every pair of consecutive frames in the dataset.
+We then use this facial optical flow ground truth to train a convolutional autoencoder based architecture, FlowNetS [6] (specialized for optical flow estimation), to learn optical flow specialized for facial motions, meaning that the motion learned should exhibit local coherency as would be expected on faces.
+We also modify the architecture by adding a cyclic loss to help the network reconstruct the latter image in a given image pair using the optical flow predicted by the network.
+We argue that adding this reconstruction in the learning framework improves the predicted optical flow by guiding it using the structure of the image pairs.
+We perform an ablation study with different loss functions, and compare the  Muhannad Alkaddour and Usman Tariq are with the American University of Sharjah, Sharjah 26666, UAE.
+We then complement the structure with a cyclic loss.
+We follow this up by a survey of optical flow methods as applied to faces in particular, and how optical flow is used in tasks such as micro-expression detection.
+2.2 Optical Flow and Facial Expression Analysis We now discuss various optical flow methods as applied to facial expression analysis, many of which are based on deep networks.
+We attempt to learn optical flow from the face movements themselves.
+We mention a few implementations of deep networks in facial expression analysis using optical flow.
+We introduce a noisy optical flow dataset, that we generate using the motion of sparse facial landmarks.
+We then learn a network for optical flow estimation, specialized for movements induced by facial expressions.
+We then complement the structure with a cyclic loss.
+We show that our modified architecture outperforms several other networks used for optical flow estimation.
+In sum, the contributions of this research are three-fold:  We propose the first semantic-rich facial emotional expression recognition work, with an exhaustive emotion set including 135 concepts comprehensively described the entire emotion domain.
+ We automatically construct a large-scale FER dataset Emo135, containing 135 fine-grained emotion categories and 728,946 facial images.
+We believe the openreleased dataset could benefit the other research works in the FER community.
+ We carefully design a correlation-guided method for fine-grained facial emotional expression recognition.
+The main contributions of the present work are as follows: 1) We propose a novel spatio-temporal deep learning transformer framework for video based microexpression recognition, which we name Short and Long range relation based Spatio-Temporal Transformer (SLSTT), the structure whereof is summarized in Fig.
+2) We use matrices of long-term optical flow, computed in a novel way particularly suited for MER, instead of the original colour images as the input to our network.
+3) We design a temporal aggregation block to connect spatio-temporal features of spatial relations extracted from each frame by multiple transformer encoder layers and achieve video based MER.
+We evaluate our approach on the three well known and popular ME databases, Spontaneous Micro-Expression Corpus (SMIC) [34], Chinese Academy of Sciences MicroExpression II (CASME II) [35] and Spontaneous Actions and Fig.
+We find that in general the current CER frameworks fall short in understanding of the semantics of a conversation.
+We found that such replacement can hardly affect the classification accuracy of the model.
+We then map the historical information for a target utterance onto a compact latent semantic space, which can be regarded as a summary of its historical context.
+We conduct experiments on two datasets (i.e., IEMOCAP [20] and MELD [16]), with four representative CER frameworks in two scenarios including real-time and non-realtime.
+In a nutshell, our main contributions are summarized as follows: (1) We motivate and explore the problem of semantic understanding the conversational context in CER.
+(2) We propose a pluggable approach, namely C3ER, to enhance the contextuality in the utterance representation, using contrastive learning.
+(3) We conduct a series of experiments on two datasets, with four representative CER frameworks.
+We further presents an extensive empirical evaluation of our method and a series of in-depth analysis and empirical studies in Section 6.
+We will discuss the related work in these two fields separately below.
+We suggest the use of batch reinforcement learning (batch-RL) to train a robot for engaging behaviors in an offline manner.
+ We propose the Sequential Random Deep Q-Network (SRDQN) as a batch-RL algorithm to train an agent for non-verbal gestures.
+ We address the distributional shift problem by constraining the frequency of backchannels generated by the RL policy to remain close to the frequency demonstrated in the dataset.
+We achieve this by introducing a reward factor which penalizes the rewards that result in excessive number of smiles/nods.
+ We train our RL agent for two types of backchannels: nods and smiles.
+ We conduct human-robot interaction experiments with the trained RL-agent.
+We also note that a very recent work [68] uses conservative Q-learning as a batch-RL algorithm to learn a backchannel policy that enhances engagement while statistically matching the human laughter generation in dyadic conversations.
+We evaluate our proposed multimodal approach using the Turkish Audio-Visual Bipolar Disorder corpus that we have recently collected and made available to the research community [3], [14], and push the state-of-the-art performance achieved on the corpus so far.
+We discuss our results extensively in the light of our quantitative findings, provide insights and point out to challenges in this problem.
+Section 2 discusses the previous work on bipolar disorder and related mental conditions, including Section 2.2 on the Turkish Audio-Visual Bipolar Disorder corpus used in our study.
+Section 3 explains the features used for each modality, the preprocessing methods, classification algorithms, and the modality fusion approach used in our study.
+We discuss our findings in Section 5 and provide some final remarks.
+Then we describe our dataset, before moving to a more technical exposition of specific works on BD estimation.
+In our experiments, we have adhered to the 2018 AVEC Bipolar Disorder and Cross-cultural Affect Recognition Competition [3] protocol to ensure comparability of results with the literature.
+Motivated by this, our work in this paper explores the task of few-shot cross-domain sentiment classification, in which the crossdomain SA system cannot only extract the domain-invariant features but also obtain the domain-specific features by giving only a few (e.g., 1 or 5) support instances meanwhile without encountering the overfitting problem.
+According to our observation, the relational knowledge graph (e.g., ConceptNet [9], [20]) has the rich domain commonsense knowledge which benefits the domain-specific semantic understanding and becomes a potential solution to solve the problem of scarce domain-specific features.
+4, the framework of our proposed model consists of two phases.
+To the best of our knowledge, our work is the first study focusing on few-shot cross-domain sentiment classification.
+ Extensive experiments and visualization analysis are conducted to evaluate the effectiveness of our proposed model in the few-shot cross-domain sentiment classification scenario.
+In this paper, our work also utilizes the external knowledge graph and focuses on solving the above two problems (i.e., the domain-specific features ignoring problem and the sentiment transfer error problem).
+They are also adapted to the cross-domain few-shot sentiment classification task and conduct the comparative experiments with our proposed model.
+In our paper, we propose a few-shot learning based cross-domain sentiment classification model to effectively address the problem of ignoring domain-specific features.
+As an emphasis, the main contributions of our work can be concluded as follows:  We propose a model based on causal narrative comprehension for emotion cause extraction.
+To the best of our knowledge, it is the first time to introduce causal narrative information into the ECE task.
+2 RELATED WORK In this section, we will review the related works from three aspects: Emotion Analysis, Emotion Cause Extraction and Narrative Understanding, which are closely related to our work in this paper.
+Specifically, considering that causal narrative involves two possibilities of chronological narrative and flashback narrative, our proposed approach improves the sequential semantics modeling in current studies and focuses on learning the two possible semantic information of causal narrative.
+3) Experiments on two speech datasets and one image dataset verified that our proposed IMCL can effectively select valuable samples for annotation and utilize unlabeled samples.
+The remainder of the paper is organized as follows: Section 2 introduces the framework of our proposed IMCL approach.
+In our prior work [4], we developed a novel longitudinal data collection process to collect real-world audio with in-the-moment labels provided by a close family member or caregiver.
+Here we extend our previous work, presenting new analytical approaches applied to a larger number of vocalizations from more individuals.
+To our knowledge, no other studies have acquired nonverbal vocalizations from mv * individuals using personalized labels in real-world settings.
+In our prior work, we describe in detail the participatory design process used to design our approach [61], our novel data collection system [4], [62], and provide preliminary classification results with three mv * communicators [4].
+Here we extend this work to include new analytical approaches for classification with eight mv * communicators, and discuss our experimental results in the context of real-world data collection.
+For more information, see https: //creativecommons.org/licenses/by-nc-nd/4.0/ performance of our network and other baseline optical flow CNNs by testing on both the Extended Cohn-Kanade dataset [7] and a portion of BP4D-Spontaneous dataset.
+Finally, we test the usefulness of our network by using the learned optical flow predictions for micro-expression detection using optical flow and the Shallow Triple Stream Threedimensional CNN (STSTNet) [8].
+ Exhibiting the usefulness of our trained network by applying it for micro-expression detection.
+For our experiments, we use the FlowNetS architecture adapted from [6] to train on our dataset.
+[22] used the pyramid-structure CNN architecture PWC-Net for optical flow prediction, which we use in this work to test on the face optical flow dataset as a benchmark implementation and compare with our performance.
+One key difference between our work and theirs is that we incorporate a cyclic loss to test how well the flow fields reconstruct the second image in the image pairs.
+In addition, we also test our network ’ s performance on microexpression detection.
+We show that our modified architecture outperforms several other networks used for optical flow estimation.
+In addition, we demonstrate the usefulness of our approach by applying it for micro-expression detection.
+After having reviewed several related works, we now describe the dataset preparation in our work.UNDERSTANDING and recognizing human facial emotional expressions has been an attractive research topic for decades, lying in the intersection area of affective science and human-computer interaction.
+To evaluate the label credibility of our categorical dataset, we set up a manual verification test in which multiple participants are required to give their judgments on given images and different emotion labels.
+To the best of our knowledge, this is the first work aimed at handling the FER problem with such a large number of emotion categories.
+The psychological backing of the utilized 135 emotion concepts makes adequate support on our claimed semantic richness of the FER problem.
+The quantitative and qualitative experiment results indicate that our method can well handle the complicated nature of so many emotions and generate reliable FER predictions with rich semantics.
+2 RELATED WORK This section briefly reviews some related literature to our work, including facial emotion expression representations, datasets, and automatic recognition methods.
+2.1 FER Representation and Dataset Facial emotional expression embodies non-verbal communication of our daily life.
+In order to capture automatically both short- and longrange relations at the same time, we apply Multi-head Selfattention Mechanism (MSM) instead of a Convolutional Kernel as the cornerstone of our deep learning MER architecture.
+To integrate various spatio-temporal relations, our design makes use of long-term temporal information in spatial data (i.e., each frame of video sample) prior to the spatial encoder, and a temporal aggregation block to fuse both short- and longterm temporal relationships afterwards.
+To the best of our knowledge, ours is the first deep learning MER work of this kind, in that it does not employ a CNN at any stage, but is rather entirely centred on a transformer architecture.
+2) We use matrices of long-term optical flow, computed in a novel way particularly suited for MER, instead of the original colour images as the input to our network.
+We evaluate our approach on the three well known and popular ME databases, Spontaneous Micro-Expression Corpus (SMIC) [34], Chinese Academy of Sciences MicroExpression II (CASME II) [35] and Spontaneous Actions and Fig.
+Interactivity is especially important for the future of AC research as emotions permeate our daily interactions—not just with each other, but with our environment and computers as well.
+Affective states arising from these interactions impact our behaviour and decision making on a fundamental level [1], [2].
+Focusing on one affect dimension reduces the cognitive load of the annotation task [7], which in turn increases the reliability of our data; however, it limits the expressive range of affect annotation in the dataset.
+In a nutshell, our main contributions are summarized as follows: (1) We motivate and explore the problem of semantic understanding the conversational context in CER.
+To the best of our knowledge, this is the first work to systematically Fig.
+We further presents an extensive empirical evaluation of our method and a series of in-depth analysis and empirical studies in Section 6.
+To the best of our knowledge, we are the first to use contrastive learning in CER.
+Different from the existing CER models which mainly focus on developing new neural network structures for performance improvement, we create a semantic context modelling method using contrastive learning to enhance a CER model, which can be incorporated into and jointly learnt with any existing CER framework to improve the classification accuracy and robustness.1 INTRODUCTION SOCIAL robots are becoming more integrated into our daily lives, with an increasing prevalence in human environments such as schools, museums and hospitals.
+The preliminary version of this approach was presented in our earlier works [24], [25].
+Although our previous work on offline RL has shown promising results in terms of learning an engaging backchannel policy, off-policy methods used for offline RL are known to suffer from distributional shift [72].
+This paper is an extension of our preliminary work with the following contributions.
+ We train our RL agent for two types of backchannels: nods and smiles.
+Note that, our previous work considered only smile generation.
+ An important inference from our user study is the lower acceptability by the users of untimely smiles compared to nods.
+To the best of our knowledge, this work (including our preliminary papers [24], [25]) is the first work on batch reinforcement learning for engaging backchannel behavior of a robot.
+Our aim is to investigate to what extent automatic analysis approaches can provide the psychiatrists with quantitative indicators to help in their diagnosis.
+Our preliminary experiments have shown that task-based analysis results in too small data partitions for training, and does not result in higher overall accuracy [22], since some negative-emotion eliciting tasks are skipped by a number of patients.
+Our contributions are summarized as follows:  We explore a problem of cross-domain sentiment classification in the few-shot scenario.
+Our work is unique in its focus on mv * individuals.
+Our modified architecture outperforms several other networks used for optical flow estimation.
+Our work can be considered to be a contribution to the study of optical flow ’ s effects on CNNs, with the difference being that we focus on facial datasets instead.
+Our work, on the other hand, focuses on learning optical flow specialized for faces.
+Our corresponding solution is to evaluate the cross-label correlations via two metrics, i.e., computing the word embedding and facial expression embedding similarity distances.
+2 RELATED WORK Our work is closely related to two areas: Conversational Emotion Recognition and Contrastive Learning.

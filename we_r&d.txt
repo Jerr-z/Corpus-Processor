@@ -1,0 +1,329 @@
+In this paper, we investigated mania-level classification (mania, hypomania, remission) of bipolar disorder (BD) patients using the Turkish Audio-Visual BD dataset, and proposed a trimodal architecture.
+The accuracy results we have obtained are not high enough to use the proposed system in a real-world clinical application as a decision support system for the clinician.
+For the clinician, this may inform the diagnosis, but for an automatic system, it is difficult to take such features into account, and for the standard assessment methodology we use in this paper to ensure comparability, these cases cause issues.
+First, we use automatic transcription, which is prone to errors, as Turkish is not a well-studied language for automated speech recognition.
+For a fair and direct comparison with the works presented in the challenge, we have strictly adhered to the challenge protocol in this work, and did not use manual translation.
+In this study, we opted for a compact set of interpretable features in each modality and we analyzed the models to gain insights into the influential features in the decision-making process.
+To provide further insights into the capability of the used feature sets in symptomatic mania classification, we conducted item-wise YMRS activity modeling.
+It is crucial to note that AI systems similar to the one we have proposed in this paper use a very limited set of sources in their assessment compared to the clinician, and are primarily statistical (as opposed to causal) in their nature.
+The Turkish Audio-Visual BD dataset we have opened to the research community is the first dataset including audio, visual, and text modalities in this area, and we hope it will foster the development of richer analysis tools for helping clinicians.
+In this section, we discuss and compare results obtained from all previously mentioned ABSQ models and methods.
+Hence, to optimize performance, we employ an RGS to find the optimal configuration of hyperparameters.
+For a fair comparison of results, we compared the models from RGS on a validation dataset comprising 20% of the training dataset from each of the aspect categories.
+Considering the characteristics for each of the models, displayed in Table 4, we have identified the generally best-performing optimizer for this problem to be Adam and the best-performing loss function to be Mean Absolute Error (MAE), calculated over the constant number of test subdatasets.
+Second, as discussed previously, ACC and PACC can in theory return probability values that are lower than zero or higher than one (for this reason, [23] proposed a clipping procedure for binary data, which we extended to be usable for ternary data).
+First, we have run CC on it and obtained the following predictions for, respectively, positive, negative, and neutral classes: [0.893333, 0.106667, 0].
+For ACC, we obtain for this subdataset: [0.978551, 0.11480645, -0.09335745].
+In this case, we observe that PACC again underperforms on all three metrics.
+In this case, we found ordinary CC to perform best according to RAE; for the AE and KLD performance measures, AspEntQuaNet proved most effective once more.
+In our experiments, we compare the performance of our proposed model with 11 few-shot learning based baselines (i.e., GNN, MetaNet, SNAIL, Proto-CNN, Proto_HATT [51], ProtoBERT, Proto-CNN with adversarial training (Proto-CNNy), Proto-BERT with adversarial training (Proto-BERTy), BERTPAIR [17]), MLADA [54]), PtNet [55] and 10 current crossdomain sentiment classification models (i.e., DANN [40], PBLM [35], HATN [34], ACAN [43], IATN [42], HATN-BERT [34], CoCMD [14], KinGDOM [9], BERT-DAAT [8]) and SENTIX [10] and 3 supervised learning based baselines (i.e., CNN, LSTM [1] and BERT [62]) which are trained with 1000 target domain labeled data, validated with 200 labeled data and tested with 800 labeled data.
+As we can observe, our proposed model achieves higher accuracies with a large margin in all of the cross-domain experimental settings.
+To the best of our knowledge, we are the first to focus on the cross-domain few-shot sentiment classification task.
+4.2.2 Comparison With Related Cross-Domain Sentiment Classification Models Meanwhile, we compare the performance of our proposed model with current cross-domain sentiment classification models.
+As we can observe, most of the cross-domain sentiment classification models (e.g., DANN [40], PBLM [35], ACAN [43] IATN [42] and so on) mainly focus on extracting the domain-invariant features by the way of unsupervised learning, but ignoring the domain-specific features.
+As we can observe, our proposed model obtains higher accuracies with a large margin than the model KinGDOM in all cross-domain tasks, which can prove that our model can effectively capture the domain-specific features and the aspect-opinion correlation features in the external commonsense knowledge learning.
+In addition, to evaluate the effectiveness of the expanded relational knowledge in our proposed model, we conduct the ablation experiment for the module Graph Feature Enocder.
+Furthermore, we also conduct the ablation experiments for the representation fusion strategy (i.e., the feature mapping layer with a reconstruction loss £recon).
+Finally, we conduct the ablation experiments for the shared-knowledge aware attention.
+As shown in Table 7, we can observe that the model with 2-hop knowledge linking strategy outperforms the model with 1-hop linking knowledge strategy by only less than 1%.
+Furthermore, we also conduct the resource cost comparison, as shown in Table 8.
+4.2.5 Viusalization To better understand the effectiveness of our proposed model, we randomly select 100 support instances from positive and negative categories and encode them into the hidden embeddings in the task of cross-domain (i.e., from Kitchen domain to Electronic domain) sentiment classification.
+Then, we map them into 2D points using Principal Component Analysis (PCA).
+Finally, we conduct the visualization analysis for our proposed model with the shared-knowledge aware attention.
+5c and 5d, we can find that the model with a shared-knowledge attention module can better distinguish the positive and negative sentiment polarities in the feature space, which can evaluate the effectiveness of the attention strategy in our model In this section, we first introduce the experiment preparation, involving the dataset details, evaluative criteria, and experimental settings.
+Then, we list some baseline methods, analyze the experimental results in detail, and conduct some ablation studies.
+Subsequently, we make some detailed analysis of some meaningful issues for our proposed model.
+Finally, we present several visualization cases to illustrate the workflow of CNCM.
+5.1 Dataset Description Following the general practice in many previous studies [4], [14], we conduct experiments on two publicly ECE corpuses: a Chinese benchmark dataset [48] based on Sina City News 2 and an English benchmark dataset [3], [19], [83] based on an English novel.
+To provide an intuitive sense of the datasets, we also present a document example from the Chinese dataset as shown in Fig.
+Additionally, we present some key information about these two datasets in Table 2.
+Noticeably, according to the numbers of the cause clause and general clause (the non-cause clause) shown in Table 2, we can conclude that the size of each dataset is not large enough and the number of cause clauses in documents is extremely uneven.
+Given that document size is closely related to document narrative complexity, we perform statistical analysis on the 2. https: //city.sina.com.cn/ CAO ET AL.
+5.2 Evaluative Criteria Following [14], [19], [52], we also adopt Precision, Recall, and F1 to evaluate the performance of models in this paper.
+5.3 Experimental Settings For better training, we initialize the related parameters of our model by the following settings.
+First, we split the dataset into training (80%) and test (20%) sets.
+In terms of data vectorization, consistent with [18], we adopt the advanced pre-trained language model BERT [78] to encode each input clause into an embedding vector.
+By investigation of BERT-wwm used in other works, we fine-tune the pre-trained model on the training set and acquire the text vectors with the dimension dw = 1,024.
+During intermediate steps, we set dh = 512 to be the dimensions of hidden state in the LSTM and BiLSTM of CNCM.
+Besides, we use the Adam optimizer with the learning rate of 0.005 to train the networks on an NVIDIA Tesla K80 GPU with the batch size of 128.
+Considering that the datasets are not very large and the number of cause clauses in documents is extremely uneven, we adopt 10-folds crossvalidation and the dropout rate of 0.5 to mitigate possible overfitting.
+Here, we analyze these two tables, respectively.
+Combining Tables 3 and 4 together, we can find that EF-BHA and RHNN are the SOTA benchmark models.
+we perform holistic t-tests of the overall performance for CNCM and these two SOTA benchmark models (EF-BHA and RHNN).
+Through the t-tests, we can acquire over 95%, and 99% of confidence that CNCM has significant improvement over EF-BHA and RHNN, respectively, which indicates that CNCM has certain superiority.
+5.6 Ablation Study To confirm the effectiveness of each unit in CNCM, we conduct ablation experiments via removing or replacing the following three aspects: the causal narrative representations of NCA, the pre-training model for text embeddings, and the context-aware emotion attention of REA.
+To examine the effect of this innovation on the final experimental performance, we conduct experiments on the ablation model CNCM (w/o NCA), which is derived from CNCM by removing the NCA unit.
+5.6.2 Pre-Trained Model for Text Embedding As we know, BERT can output outstanding text representations which have been shown to be very effective in many downstream tasks of natural language processing.
+Owing to this reason, we achieve the initial vectorization of texts in CNCM through BERT ’ s evolution model BERT-wwm.
+To explore the importance of the pre-trained language model on the ECE task, we replace BERT-wwm with another popular pre-trained language model, word2vec [86] to conduct experiments.
+5.7 Detailed Analysis In this subsection, we carry out some supplementary experiments to give a detailed analysis of our proposed model from multiple aspects.
+Furthermore, we discuss the effects of the balance about cause-result order on the performance of the ECE task.
+Thus, we conduct relevant data statistics and experiments to explore the effects of this factor on the performance of CNCM.
+Based on this observation, we choose the documents whose emotion cause clauses are no more than 1 or 2 or 3 clauses away from the emotion result clauses to construct three sub-datasets.
+5.7.3 Effects of Document Size Considering that document size is one of the important factors in determining the narrative complexity of a document, we also explore the effects of document size on CNCM.
+7, we select the document size in four ranges, i.e,3-4, 5, 6, 7-12 to conduct experiments.
+If a document contains multiple cause clauses, we select its first cause clause for statistics.
+5.7.4 Effects of Emotion Category In order to study whether CNCM had a bias for emotion categories when performing the ECE task, we also undertake a statistical analysis of emotion category.
+Taking the Chinese dataset as an example, first, we use the dictionarybased approach to identify the emotion of the documents in the dataset.
+Here, we use the Chinese emotion ontology database [89] to classify the emotions of these documents into seven categories: “ glad ”, “ good ”, “ angry ”, “ sad ”, “ afraid ”, “ bad ” and “ amazed ”.
+Second, we conduct statistics of emotion category for documents in the Chinese dataset and its test set, respectively.
+Finally, we perform the same statistics for the documents whose emotion cause clauses are correctly predicted in the test set.
+5.7.5 Effects of Training Dataset Scale To present the performance of CNCM systematically, we compare the results under different scales of the training dataset for our developed model.
+Considering that the training dataset of the original experiment accounts for 80% of the total data in the Chinese dataset, we take into account the other three training data settings: 20%, 40%, and 60% of the total data.
+To be specific, we implement experiments under these training data settings and compare the corresponding performances to the original experiment.
+5.8 Case Studies To provide some intuitive demonstrations of how causal narrative representation and emotional causal association improve the effectiveness of our model, we show some case studies in Fig.
+In addition, we also provide two error cases to illustrate the existing problems of CNCM.
+As a further exploration, we aim to address this issue in the future.
+As the dimensional emotions are more fine-grained and contain richer information, we mainly focus on the performances of the dimensional regression tasks.
+4.3.1 Effect of Weight a To analyze the sensitivity of IMCL to the weight a in the calculation of the pseudo-labels, we fixed each tt to et=2 and conducted experiments for a ¼ f0:1; 0:5; 0:9g.
+To evaluate the flow network, we first report preliminary results as discussed in Section 4.3.1.
+Next, we evaluate a number of other popular optical flow methods on the test set.
+To select Gunnar-Farneback flow, we used Allaert et al. ’ s [30] review, who recommend optical flow methods wellsuited for facial motion, namely Gunnar-Farneback, FlowField, and Normalized Convolutional Upsampling (NCUP).
+Based on this, we felt that Farneback would be an appropriate candidate from the non-CNN category.
+For this task, we use the same networks as in optical flow prediction with the addition of TV-L1, since the latter was used to compute the optical flow in STSTNet [8], the microexpression classifier we used in this work.
+From Table 1, we observe that the network trained on our BP4D-derived face dataset performs best when tested on faces.
+Due to the large flow vectors present in Sintel, we suspect that the network trained on Sintel tends to also predict flow fields with large vector magnitudes when tested on Sintel.
+After adding the cyclic loss and training for more data and epochs, we expect to observe a difference in performance compared with Exp.
+Here, we train the setup for Exp 1 again, using the same data split as the other experiments, for comparison purposes.
+Now we show the results of the networks trained with cyclic loss as described in Sections 4.3.2 and 4.3.3.
+Note that in the case of CK+, we trained the networks on BP4D-Spontaneous data, which is a completely different dataset.
+What we mean here, is not the magnitude in general, but rather magnitude in regions that do not correspond or assist in microexpression detection.
+We hypothesize that our method will overcome the performance difference in some of the results if we use a denser keypoint tracker during the optical flow training phase to generate the BP4D ground-truth.
+Furthermore, as previously discussed, we have used FlowNetS to train the face data to benchmark its efficacy compared to other networks, and thus using a better-designed CNN along with the denser keypoint groundtruth will likely further improve the performance.To evaluate our proposed model on recognizing facial emotional expressions, we conduct both performance comparison and ablative study.
+Therefore, we choose two kinds of competitive models and train them on the Emo135 dataset.
+First, we adopt two commonly used pre-trained backbones, ResNet-50 and VGGFace2, assembled with Multilayer Perceptron (MLP) classifiers.
+Second, we adopt two latest FER models, ARM [58] and DACL [59], which have achieved state-of-the-art performance on basic emotion recognition tasks, and modify their output layers for 135-class recognition.
+Therefore we integrate the most recent released ResNet-50 model trained on ImageNet-1k [60] dataset as backbone and a 5-layer MLP to regress the image features to 135 dimensional logits.
+To fairly compare our model with ARM [58], we modify its regression module (final layer dimension) to make it compatible with 135-class FER.
+Similar as ARM [58], we adopt the main structure of DACL [59] including the attention net and the sparse center loss calculation module but change the target output expression dimension to 135.
+Besides, we also conduct ablative studies to evaluate some key component including the expression embedding model, correlation layer, and label transformation loss of our framework.
+For those components, we provide vanilla alternatives to evaluate the effectiveness of our design.
+In Table 2, we compare the prediction results from each method on the test set, including F1 score and accuracy for the top 1, 5, 10 classes.
+4.4 Semantic Evaluation To evaluate the semantic relationships between the emotion labels and the predicted results, we design several experiments in this section.
+First, we compare different word embedding models in terms of their influences on the semantic similarity distances.
+By our problem setting, we choose three popular pre-trained word embedding model, including Word2Vec [54], GloVe [55], and BERT [62], to study the corresponding correlations between emotion word semantics.
+Then we show some example testing results in Fig.
+Furthermore, we employ the chosen word embedding model [54], [55] to calculate the semantic distances between the ground-truth label and our predictions/the rest of 135 emotion terms (See Table 4).
+5 LIMITATION AND DISCUSSION Despite the fact that we have evaluated the emotion labeling results of Emo135 dataset by conducting the subjective survey in the experiment, there still remains a lot of potential improvements in the future.
+Besides, we would like to point out that the 135-categorical emotion representation, which stands for the semantic richness in this paper, is not a fixed standard.
+The micro-expression databases containing multi-modal signals [74], [75], which have begun emerging recently, seem promising in overcoming some of the limitations of the existing corpora, and we intend to make use of them in our future work.Following the cleanup process presented in Section 5.6, this Section performs a preliminary analysis of the clean version of the AGAIN dataset, focusing on patterns in the arousal annotations and the AGAIN game context features (see Section 6.1).
+6.2 Preliminary Arousal Models In this section we provide an initial modelling approach for the AGAIN dataset, serving as a baseline study for future research with this dataset.
+As a preliminary step, we process the clean AGAIN dataset to predict arousal.
+To this end, we split the annotation traces into 3-second time windows— computing the mean of the window—and introduce a 1-second lag to the annotation trace.
+Here we chose a 1-second lag to conform to the aforementioned body of research.
+While in the published dataset both clean and raw data is available for the application of different machine learning techniques, we treat arousal modelling in AGAIN as a preference learning task [9], [10], [75] and focus on predicting arousal change from a 3-second time window to the next.
+During this transformation we observe consecutive datapoints within sessions in pairs and create a new representation of the dataset.
+For every ðxi; xjÞ 2 X pair of game data we observe the relationship of their affect output ðyi; yjÞ 2 Y.
+If yi is preferred to yj, we can label the distance between the corresponding data points (xi  xj) and 1.
+Conversely, we can label the reverse of this observation (xj  xi) as 0.
+While either one of these observations is sufficient to describe the relationship between xi and xj, by keeping both observations (xixj ¼ 1 and xjxi ¼ 0), we can maintain a 50% baseline accuracy in the post-transformation dataset independently of the trends in the dataset before the transformation.
+To reduce experimental noise from trivial changes within the arousal trace, we omit all consecutive time windows between which the arousal change is less than 10% of the total amplitude of the session ’ s arousal value.
+In this paper we are using the RF implementation in the Scikit-learn Python library [78].
+For controlling overfitting we set the number of estimators in the RF to 100 and the maximum depth of each tree to 10.
+This experimental setup is meant to provide a simple baseline prediction performance for the dataset, and thus we are not tuning the hyperparameters of the algorithm.
+Because RFs are stochastic algorithms, we run each experiment 5 times and we report the 10-fold cross validation accuracy.
+Looking at individual games across different feature sets, we observe that the general features manage to perform comparably to the specific features independently of the game tested.
+In this section, we discuss some of the limitations and propose avenues for future work, before concluding the paper.
+(2) Given the improvement over DAG, we have achieved a new SOTA performance on both IEMOCAP and MELD.
+We also implemented the DialogueGCN [13], but we find it easy to collapse during the model training phrase, so we do not include it as our baselines.
+we explore how the regularization coefficient affects the emotion classification performance.
+With the increase of, F1- TABLE 3 Performances on IEMOCAP Dataset Model Happy Sad Neural Angry Excitd Frustrated Avg P R F1 P R F1 P R F1 P R F1 P R F1 P R F1 Acc F1 bc-lstm 41.0 34.7 37.6 69.4 66.5 67.9 51.6 53.9 52.7 60.0 67.1 63.3 66.4 56.2 60.9 56.2 62.2 59.0 57.8 57.9 +Uni-C3ER 37.3 26.4 30.9 67.3 69.8 68.5 53.8 53.1 53.5 60.1 64.7 62.3 63.4 67.2 65.3 57.2 58.3 57.7 58.2 57.8 +Bi-C3ER 37.7 41.7 39.6 68.8 71.0 69.9 53.5 53.6 53.6 66.9 59.4 62.9 66.2 52.5 58.6 58.2 67.0 62.3 58.7 {58.7 {1.6%" 1.4%" DialogueRnn 52.4 30.6 38.6 86.9 64.9 74.3 54.9 57.8 56.3 69.0 64.1 66.5 69.6 74.2 71.8 56.4 70.3 62.6 63.1 62.9 +Uni-C3ER 53.6 25.7 34.7 53.6 25.7 83.7 59.1 60.9 60.0 68.2 60.6 64.2 64.9 89.6 64.9 61.8 53.5 57.4 65.2 64.0 +Bi-C3ER 55.9 26.4 35.8 89.7 78.4 83.7 63.7 58.1 60.8 64.1 68.2 66.1 65.1 90.3 75.6 59.2 61.4 60.3 66.1 {65.2 {4.8%" 3.7%" AGMHN 50.3 53.9 52.0 81.6 66.9 73.5 49.6 58.6 53.7 69.5 61.8 65.4 75.6 55.9 64.2 56.1 65.1 60.1 60.8 61.3 +Uni-C3ER 50.9 38.46 43.8 81.5 64.9 72.3 50.1 58.1 53.8 82.1 56.5 66.9 76.2 62.5 68.6 54.8 73.5 62.8 61.9 61.7 +Bi-C3ER 55.0 38.5 45.3 80 63.7 70.9 54.0 64.1 58.6 74.6 60.6 66.9 72.8 69.9 71.3 58.1 68.0 62.6 63.4 {63.4 {4.3%" 3.4%" DAG 43.0 36.4 39.4 83.7 77.6 50.5 63.6 76.6 69.5 71.7 64.1 67.7 70.8 64.9 67.7 68.9 69.8 69.4 68.1 67.9 +Uni-C3ER 48.8 42.0 45.1 79.1 80.4 79.8 65.7 74.2 69.7 69.6 64.7 67.1 73.1 68.2 70.6 69.1 68.8 68.9 68.9 68.8 +Bi-C3ER 50.0 41.3 45.2 78.0 81.2 79.6 66.4 74.5 70.2 68.2 68.2 68.2 70.9 69.2 70.1 71.6 67.0 69.2 69.2 {68.9 {1.6%" 1.5%" It shows the overall performance of the four baselines and two variants Uni-C3ER and Bi-C3ER, which we added on the basis.
+In order to better control the variables, we select the nearest 3 utterances adjacent to the target as the positive samples, and set the batch size values for all CER methods to 8.
+6.6 Perturbation Test In order to figure out where the performance gain of the C3ER comes from and quantify the influence of C3ER on the backbone CER framework ’ s performance, we carry out a series of perturbation tests on IEMOCAP dataset, which is known more sensitive to contextual information.
+6.6.1 Test Setting Since it is hard to quantify the context semantic consistency between target utterance and its conversational context, we follow the context-replacement approach used in our empirical study Section 4, to indirectly validate the performance of C3ER through perturbation tests by replacing the conversational context of the target utterance under different context-replacement modes.
+Furthermore, we chose 5 different random seeds to test results and report the average F1-score.
+According to the observations we have made in the empirical analysis of the baseline models (see Section 4), we divide them into two types, called Label Copying Approaches (i.e., BC-LSTM, DialogueRnn and AGHMN) and Non-label Copying Approaches (i.e., DAG) respectively.
+For the baseline DAG [15], we observe an interesting phenomenon that the perturbation no matter under EM, RM, AM operation, has less significant influence on its emotion classification performance compared to other three baselines.
+According to the principles and framework structure of DAG, we know that DAG mainly focuses on the construction of structural information of a conversation, that is, the relationship between speakers established by a directed acyclic graph.
+Therefore, in order to figure out where the gains come from, we do a further ablation experiment and design 3 different modes to break the conversational context for DAG.
+For the “ structure ” mode, we take randomly replace the edges constructed by the DAG and speaker information as the destruction of the structural context of the dialogue.
+In a summary, we have conducted a quantitative analysis of how different CER models use the conversational contextual information.
+6.7 Case Study In order for a more intuitive understanding of the effect of our method, we select an example conversation from IEMOCAP as a case, to show how C3ER influences its attention in comparison with DialogueRnn, which correspond to a large performance improvement.
+Specifically, we analyze the attention distribution of the two models (i.e., DialogueRnn with and without C3ER) in recognizing the last utterance of the conversation.
+7 CONCLUSION In this paper, we fisrt conduct an extensive empirical investigation of the effect of conversational context on the performance of conversational emotion recognition models.
+The results reveal that the representative CER models we have studied tend to overfit certain individual aspects of context, e.g., the emotion labels and intra/inter-speaker structures, but lack a holistic understanding of the conversational context, specially semantic context.
+To solve this problem, we proposed a semantic-guided regularization method, namely C3ER, which can be integrated into a baseline CER model via contrastive learning and joint training.
+For the object-oriented analysis, we determine the engagement values of each participant using the annotated laughs, smiles, nods, and the online logged values of adjacency pair TABLE 4 Sample Dialog Between Furhat and the Players Furhat [Looks at Player1] Sailor, should we explore around the beach or should we rather go and discover the forest.
+Now we are in the forest.
+Shall we go towards the river or hunt for animals?
+The plot for initial 15 seconds is not shown since we defined the first value of engagement over 15 seconds.
+Lastly, in order to highlight the difference between the two types of interaction, we noted the total number of smiles and nods performed by the participants during the interactions.
+Since each player experienced both games, and a significant difference was observed in the engagement values for the two types of games, we can conclude that the game with the RL policy was perceived as more engaging.
+We have performed a comprehensive analysis of fusion of modalities for predicting mania levels.
+We achieve 64.8% test set UAR on this configuration, which advances the state-of-the-art on the BD dataset.
+We note two limitations related to this modality, which can be tackled in future studies.
+We have, in a preliminary experiment, manually transcribed one task to assess the performance of the automatic translation, and verified that it was producing comparable results with the manual translation.
+We have selected 16 training epochs for this model (MAE was the best loss function for the QuaNet-based models).
+We have randomly selected a subdataset of the test dataset for the FOOD #QUALITY aspect category.
+We analyze the experimental results from four perspectives as follows.
+We analyze that not all the provided support features (or instances) can benefit identifying the sentiment polarities of the query instances.
+We analyze that the domain-invariant features are scarce in the given few support instances, which limits the performance of sentiment analysis in the target domain.
+We observe that they mainly focus on capturing the domain-invariant features but ignore the domain-specific features.
+We analyze that the performance of the supervised learning based baselines highly depends on large-scale labeled data of target domain.
+We analyze that the relational knowledge can effectively enrich the domain-specific information based on the provided few support instances and benefit the performance of cross-domain sentiment analysis tasks.
+We consider that the discrepancy of the embedding spaces from the graph feature encoder and domain-adapted BERT encoder leads to bias in the distance metric, thereby degrading the performance of prototypical networks.
+We analyze that the sentiments of the aspect-opinion pairs can be derived through the sentiments of their contextual aspect-opinion pairs.
+4.2.4 Analysis for N-Hop Knowledge Linking Strategy We conduct the comparative experiments between our proposed model with 1-hop knowledge linking strategy and that with 2-hop knowledge linking strategy adopted in the Knowledge Graph Construction of Phase 1.
+We can observe that the semantic understanding of the domain-specific (i.e., the target domain) features are significant for the cross-domain learning.
+5.4 Baseline Methods We compare our proposed CNCM with the following groups of baselines:  Rule-based methods: CB [46] is also a traditional method that introduces commonsense knowledge into the ECE task to reveal emotion causes.
+We can also observe that among the three single-task AL algorithms, whereas usually ST-t ranked first in Task t (the task it focused on), it ranked poorly in the other two tasks.
+4.3.2 Effect of Threshold t We also conducted experiments with t ¼ fe; e=2; e=5g [where each et 2 e was the training RMSE of the RR model in Task t] while fixing a ¼ 0:5.
+We experimented with multiple labels while piloting the study but found that asking labelers to designate multiple classes imposed too high of a cognitive load and reduced the overall fidelity of the marked labels.
+We then show the results of the ablation study for the experiments trained on the full dataset, and compare the networks using the average EPE and AAE.
+5.1 Results for Ablation Studies We first describe the initial results of Exp.
+We report the performance in terms of average EPE.
+We conjecture that this may show the usefulness of our generated dataset to problems that are even unrelated to faces.
+5.2 Comparison With Other Networks We now compare the results with other notable optical flow implementations.
+We note that the following remarks for the remainder of this section are qualitative in nature and are based on a very small subset, but nevertheless yield some insight to accompany the statistics from Tables 2 and 3.
+We first observe the differences in flow predictions among the networks trained on our dataset.
+We use the offset values of 10 pixels in all four directions, for cropping.
+5.3 Results of Micro-Expression Detection We now report on the results of the experiments described in Section 4.4.2 for micro-expression detection.
+We note that the F1-scores are typically lower than the precision and recall since these are aggregated metrics, i.e., the F1-score averaged over all F1-scores in the LOSOCV, and is not the harmonic mean of the aggregated precision and recall.
+We hypothesize that our method will overcome the performance difference in some of the results if we use a denser keypoint tracker during the optical flow training phase to generate the BP4D ground-truth.
+We show the percentage of the three judgements that each category receives, arranging from “ absolutely agree ” to “ disagree ”.
+We also design a baseline consisting of a pre-trained VGGFace2 model [61] and the same MLP layers as the ResNet-50 baseline.
+We use the original prototypical rating results [7] as reference and calculate the Pearson Correlation Coefficients (PCC) between each model ’ s output and the original matrix (Table 3).
+We apply preference learning through a pairwise transformation.
+We initialise RFs with their default parameters.
+We note that the presented machine learning models are quite preliminary, aiming to showcase a use-case for the dataset along with a proposed cleaning and modelling pipeline.
+We can draw the following observations: (1) C3ER can improve the classification accuracy over all the baseline methods.
+We also implemented the DialogueGCN [13], but we find it easy to collapse during the model training phrase, so we do not include it as our baselines.
+We also investigate the influence of the number of negative samples on the emotion classification results for the IEMOCAP dataset.
+We also designed three different replacement modes, which are detailed in Section 4.
+We also conduct the significant test under the hypothesis that the CER models without C3ER have a better performance than the models with C3ER, and the statistical significance result is reported by permutation test with p <0:1.
+We will discuss them separately below.
+We suspect that C3ER can help the CER model capture the structure of a conversation inferred from the semantic context, so as to reduce dependence on the conversational structure.
+Player1 We should go the forest.
+We don ’ t have the tools to kill or capture animals.
+We defined a running-mean engagement EðtÞ to observe long-term accumulation at time t as EðtÞ ¼ ht t: (7) where ht is the number of CEs until time t in a given session.
+We also defined a session engagement as a single scalar to represent engagement in each interaction, represented by EðTÞ where T is the session length.
+In line with our expectations, this analysis showed which YMRS items cannot be accurately modeled with the used feature sets, while some items, such as ‘ Sexual interest ’, ‘ Speech rate and amount ’ as well as ‘ Content ’, provided promising results for future studies.
+For the majority of these models, the optimal batch size trained on our data was determined to be 32.
+In our experiments, we compare the performance of our proposed model with 11 few-shot learning based baselines (i.e., GNN, MetaNet, SNAIL, Proto-CNN, Proto_HATT [51], ProtoBERT, Proto-CNN with adversarial training (Proto-CNNy), Proto-BERT with adversarial training (Proto-BERTy), BERTPAIR [17]), MLADA [54]), PtNet [55] and 10 current crossdomain sentiment classification models (i.e., DANN [40], PBLM [35], HATN [34], ACAN [43], IATN [42], HATN-BERT [34], CoCMD [14], KinGDOM [9], BERT-DAAT [8]) and SENTIX [10] and 3 supervised learning based baselines (i.e., CNN, LSTM [1] and BERT [62]) which are trained with 1000 target domain labeled data, validated with 200 labeled data and tested with 800 labeled data.
+Furthermore, the ablation experiments and visualization analysis are conducted to evaluate the effectiveness of different modules in our proposed model.
+To evaluate the effectiveness of our proposed model, eight popular few-shot learning baselines designed for relation classification or text classification are adapted into the few-shot cross-domain sentiment classification scenario.
+As shown in Tables 2 and 3, two experimental settings (i.e., 1-shot and 5-shot) are considered in our experiments.
+As we can observe, our proposed model achieves higher accuracies with a large margin in all of the cross-domain experimental settings.
+Different from the few-shot learning baselines, our proposed model can effectively enhance the support information with the given few support samples from the target domain, which effectively improves the performance in cross-domain learning.
+As shown in Table 2 and Table 3, the performance of the three baselines GNN, MetaNet and SNAIL is worse than our models with a large margin.
+According to our observation, these three baselines even perform worse when the number of support instances increases in some cross-domain tasks (e.g., the Kitchen! Book cross-domain task for the model SNAIL shown in Tables 2 and 3).
+In the experiments shown in Table 2 and 3, our proposed model achieves better performance as the number of support instances increases and can make full use of the few provided support instances.
+Moreover, compared with the prototypical network based baselines (i.e., the model Proto-CNN, Proto_HATT, ProtoBERT), our proposed model (which is also based on the prototypical network) performs better with a large margin.
+It can further evaluate the effectiveness of the external commonsense knowledge learning module (i.e., Phase 1: Aspect-Opinion Correlation Aware Graph Feature Learning) designed in our model.
+Compared with the BERT-based few-shot learning baselines (i.e., Proto-BERT, Proto-BERTy, BERT-PAIR), our proposed model with domain-adapted BERT encoder achieves around 2% -4% higher accuracies.
+To the best of our knowledge, we are the first to focus on the cross-domain few-shot sentiment classification task.
+Compared with the adapted few-shot learning methods, our proposed models achieve higher accuracies with a large margin in all experimental settings, as shown in Tables 2 and 3.
+K Avg DANN 81.7 78.6 79.3 82.3 79.7 80.5 77.6 79.7 86.7 76.1 77.4 84.0 80.3 PBLM 82.5 71.4 74.2 84.2 75.0 79.8 77.6 79.6 87.1 82.5 83.2 87.8 80.4 HATN 86.3 81.0 83.3 86.1 84.0 84.5 85.7 85.6 87.0 85.2 86.2 87.9 85.2 ACAN 82.4 79.8 80.8 83.5 81.8 82.1 81.2 82.8 86.6 83.1 78.6 83.4 82.2 IATN 87.0 81.8 84.7 86.8 84.1 84.1 86.5 86.9 87.6 85.9 85.8 88.7 85.8 HATN-BERT 89.8 87.1 87.9 89.4 88.8 87.8 87.2 87.0 90.3 89.4 87.6 92.0 88.7 CoCMD 81.8 76.9 77.2 83.1 78.3 79.6 83.0 83.4 87.2 85.3 85.5 87.3 82.4 KinGDOM 82.7 78.4 80.0 85.0 80.3 82.3 83.9 83.9 88.6 86.6 87.1 89.4 84.0 BERT-DAAT 90.9 88.9 88.0 89.7 90.1 88.8 89.6 89.3 91.7 90.8 90.5 93.2 90.1 SENTIX 91.2 90.4 89.6 91.3 91.2 89.9 93.3 93.6 93.6 96.2 96.0 96.2 92.7 AKFSM 92.5 91.4 91.2 92.3 91.4 91.5 93.7 93.9 94.7 96.7 96.2 96.5 93.5 Five support instances of target domain are given in our proposed model.
+As shown in Tables 2 and 3, comparing with the performance of MLADA and PtNet, our proposed model achieves higher accuracies with a large margin.
+Instead, with the commonsense knowledge graph, rich domain-specific sentiment features can be expanded in our proposed model and improve the performance of sentiment classification in the target domain.
+4.2.2 Comparison With Related Cross-Domain Sentiment Classification Models Meanwhile, we compare the performance of our proposed model with current cross-domain sentiment classification models.
+As shown in Table 4, our proposed model achieves higher accuracies in all cross-domain sentiment classification tasks.
+In contrast, our proposed model only has 5:5% accuracy gap among all the cross-domain tasks.
+To some extent, it can evaluate that our proposed model can effectively capture the domainspecific features of the target domain and narrow the discrepancy between the source and target domains.
+As shown in Table 4, our proposed model (with 5 support instances) even achieves better performance with a large margin than the CoCMD (with 50 support instances).
+It can evaluate that our proposed model can effectively solve the overfitting problem and learn the rich domain-specific features with only a few support instances.
+Moreover, similar to our proposed model, the model KinGDOM [9] also utilizes the external commonsense knowledge graph in the cross-domain adaptation.
+As we can observe, our proposed model obtains higher accuracies with a large margin than the model KinGDOM in all cross-domain tasks, which can prove that our model can effectively capture the domain-specific features and the aspect-opinion correlation features in the external commonsense knowledge learning.
+Meanwhile, several supervised learning based baselines are compared with our proposed model.
+As shown in Table 5, both the unsupervised learning based methods (e.g., BERT-DAAT [8] and SENTIX [10]) and our proposed model even perform better than the supervised learning based baselines with many shots (i.e., 1000).
+Specifically, comparing with the performance of AKFSM|, our proposed model AKFSM achieves higher accuracies with a large margin in all experimental settings.
+In addition, to evaluate the effectiveness of the expanded relational knowledge in our proposed model, we conduct the ablation experiment for the module Graph Feature Enocder.
+Comparing with the performance of AKFSM and AKFSM, our model with the Graph Feature Encoder achieves higher performance with a large margin.
+Moreover, the related work KinGDOM [9] also adopts the external commonsense knowledge graph to enrich domain TABLE 5 Average Accuracies (%) Comparison With Supervised Learning Baselines Target Domain B D K E CNN 63.1 69.2 73.5 70.9 LSTM 79.6 76.2 81.5 77.7 BERT 87.0 88.3 91.0 89.9 AKFSM (AVG) 91.7 91.7 94.1 96.5 The results of our model are the average accuracies of the three cross-domain tasks.
+Different from our proposed model, the relations between aspect and opinion terms cannot be modeled, which leads to the sentiment transfer error problem, as shown in Fig.
+Specifically, comparing with the model AKFSMtu, our proposed model AKFSM with the Aspect-Opinion Correlation aware Graph Feature Learning module performs better with a large margin, which can evaluate that our model can effectively solve the sentiment transfer error problem and capture the domain-specific features.
+Compared with the performance of the model AKFSMy in Table 6, our model with the reconstruction loss achieves better performance in all cross-domain experimental settings.
+In addition, the self-supervised sentiment alignment task is designed in our model to force the GCN encoder to capture the sentiment alignment features among aspect-opinion pairs by exploiting their co-occurrence features within documents.
+According to our observation, not all the support external knowledge benefits the sentiment analysis of the query instances.
+Motivated by this, the shared-knowledge aware attention is designed in our TABLE 6 Ablation Experiments for the Modules of our Proposed Model in the 5-Shot Setting S!
+K 87.6 85.0 92.4 95.5 95.8 94.9 96.5 Avg 85.4 88.8 89.9 92.4 92.2 92.5 93.5 AKFSM| denotes our proposed model which replaces the Domain-adapted BERT Encoder with BERT Encoder without post-training; AKFSM denotes our proposed model without the Graph Feature Encoder; AKFSMtu denotes our proposed model which replaces the aspect-opinion correlation aware sentiment knowledge graph with the knowledge graph in KinGDOM [9]; AKFSMy denotes our proposed model without graph feature reconstruction strategy.
+AKFSMz denotes our proposed model without self-supervised sentiment alignment learning task for the GCN encoder pretraining in Phase 1.
+AKFSM€ denotes our proposed model without the shared-knowledge aware attention.
+TABLE 7 Average Accuracies (%) Comparison of our Proposed Model With 1-hop Knowledge Linking Strategy and 2-hop Knowledge Linking Strategy in Phase 1 S!
+As shown in Table 6, comparing with AKFSM€ and AKFSM, our model with shared-knowledge aware attention obtains better performance, which evaluates the effectiveness of the shared-knowledge aware attention.
+4.2.4 Analysis for N-Hop Knowledge Linking Strategy We conduct the comparative experiments between our proposed model with 1-hop knowledge linking strategy and that with 2-hop knowledge linking strategy adopted in the Knowledge Graph Construction of Phase 1.
+4.2.5 Viusalization To better understand the effectiveness of our proposed model, we randomly select 100 support instances from positive and negative categories and encode them into the hidden embeddings in the task of cross-domain (i.e., from Kitchen domain to Electronic domain) sentiment classification.
+5b shows the instance embedding distribution of our proposed model without the Graph Feature Encoder.
+5b and 5d, it can evaluate that our model with the aspect-opinion correlation aware graph feature learning module can effectively distinguish the positive and negative sentiment polarities in the same feature space.
+Finally, we conduct the visualization analysis for our proposed model with the shared-knowledge aware attention.
+5c and 5d, we can find that the model with a shared-knowledge attention module can better distinguish the positive and negative sentiment polarities in the feature space, which can evaluate the effectiveness of the attention strategy in our model In this section, we first introduce the experiment preparation, involving the dataset details, evaluative criteria, and experimental settings.
+Subsequently, we make some detailed analysis of some meaningful issues for our proposed model.
+5.3 Experimental Settings For better training, we initialize the related parameters of our model by the following settings.
+5.4 Baseline Methods We compare our proposed CNCM with the following groups of baselines:  Rule-based methods: CB [46] is also a traditional method that introduces commonsense knowledge into the ECE task to reveal emotion causes.
+And so does our model CNCM.
+Thus, to scientifically evaluate whether our CNCM model is superior to existing models, TABLE 3 Performances of Different Models on the Chinese Dataset Model Precision Recall F1 (1) CB [46] 26.72% 71.30% 38.87% (2) RB [11] 67.47% 42.87% 52.43% (3) SVM+word2vec [85] 43.01% 42.33% 41.36% (4) SVM+RB+CB [83] 59.21% 53.07% 55.97% (5) Multi-kernel [48] 65.88% 69.27% 67.52% (6) LambdaMART [53] 77.20% 74.99% 76.08% (7) Memnet [52] 70.76% 68.38% 69.55% (8) CANN [50] 77.21% 68.91% 72.66% (9) HCS [13] 73.88% 71.54% 72.69% (10) MANN [15] 78.43% 75.87% 77.06% (11) FSS-GCN [4] 78.61% 75.72% 77.14% (12) EF-BHA [54] 79.38% 78.08% 78.68% (13) RHNN [14] 81.12% 77.25% 79.14% (14) CNCM 93.97% 78.85% 85.75% TABLE 4 Performances of Different Models on the English Dataset Model Precision Recall F1 (1) Memnet [52] 46.05% 41.77% 43.81% (2) MANN [15] 79.33% 40.81% 53.28% (3) FSS-GCN [4] 67.43% 53.03% 59.48% (4) RHNN [14] 69.01% 52.67% 59.75% (5) EF-BHA [54] 72.77% 53.05% 61.37% (6) CNCM 57.69% 62.10% 59.79% CAO ET AL.
+5.6.1 Causal Narrative Representation of NCA As stated above, the essential innovation of our proposed model is the causal narrative representations of the NCA unit.
+Therefore, our proposed CNCM can still perform well on the ECE task without BERT.
+It implies that the REA unit has a great influence on our model.
+5.7 Detailed Analysis In this subsection, we carry out some supplementary experiments to give a detailed analysis of our proposed model from multiple aspects.
+Especially in our Chinese dataset, as shown in Table 6, the former and the latter account for 65.75% and 34.25%.
+This may suggest that our proposed model is insensitive to emotion categories.
+5.7.5 Effects of Training Dataset Scale To present the performance of CNCM systematically, we compare the results under different scales of the training dataset for our developed model.
+These findings could indicate that our proposed model is still effective in the case of small training data.
+5.8 Case Studies To provide some intuitive demonstrations of how causal narrative representation and emotional causal association improve the effectiveness of our model, we show some case studies in Fig.
+13 C, although our model could identify the accurate causal region by the learned causal narrative representation, the emotional causal association learned from the final emotional attention is biased.
+6 The section presents our experimental results in MDEE and SECE, parameter sensitivity analysis, and additional discussions.
+Generally our proposed IMCL achieved the best performance, and IMAL the second best.
+4.3 Parameter Sensitivity There are two hyper-parameters in our proposed IMCL in Algorithm 2: a, weight of the estimated label in (8), and the sample selection rules in SSL, i.e., threshold vector t in MDEE and percentage p in SECE.
+Finally, the results of the micro-expression detection task using all networks are presented, which shows the usefulness of our method for a practical application.
+It is worth noting that the subjects that appear in the training set do not appear in the validation or test sets of our face data.
+From Table 1, we observe that the network trained on our BP4D-derived face dataset performs best when tested on faces.
+The flow fields on our face dataset consist of small, non-rigid motions, especially when the head motion is lacking, whilst the motion fields in the FlyingChairs dataset have larger magnitude and is more rigid.
+We conjecture that this may show the usefulness of our generated dataset to problems that are even unrelated to faces.
+Hence, in our FlownetS implementation, large erroneous predictions may have impacted the EPE more than the smaller-valued predictions from the face-trained model.
+3I exhibits the worst performance in both EPE and AAE amongst our network variants.
+In all cases, the networks trained on our automatic face dataset perform better in both metrics than PWC-Net [22] and LiteFlowNet [23], which are some of the popular CNN-based optical flow methods.
+FlowNet2.0 and FlowNet3.0-CSS, which are both state of the art improvements on FlowNetS, are both outperformed by all of our network variants with the exception of average EPE in Exp.
+It also helps confirm that our generated ground-truth is reliable, since the flow computed using Farneback is the closest flow field amongst the other network variants.
+This suggests that our method can be extended to face datasets that are different from those in the training set and still achieve superior performance than optical flow CNNs that were not trained on faces, indicating that the learnt knowledge is fairly independent of the dataset.
+An improvement would be to also include grayscale images in the training set, since their presence in CK+ is a possible reason for the decrease in performance seen by our networks.
+We first observe the differences in flow predictions among the networks trained on our dataset.
+PWC-Net demonstrates a more consistent flow pattern similar to our networks and Gunnar-Farneback.
+From the overall results of the experiments, one may note that our networks trained on the automatically generated face dataset are better-suited at predicting the optical flow on faces compared to other networks.
+Although the networks trained using our method performed well when trained and tested on SAMM, they were somewhat outperformed in the other two protocols.
+This could be due to the sparse nature of the learned optical flow representations from our generated dataset.
+We hypothesize that our method will overcome the performance difference in some of the results if we use a denser keypoint tracker during the optical flow training phase to generate the BP4D ground-truth.
+Furthermore, as previously discussed, we have used FlowNetS to train the face data to benchmark its efficacy compared to other networks, and thus using a better-designed CNN along with the denser keypoint groundtruth will likely further improve the performance.To evaluate our proposed model on recognizing facial emotional expressions, we conduct both performance comparison and ablative study.
+To fairly compare our model with ARM [58], we modify its regression module (final layer dimension) to make it compatible with 135-class FER.
+Besides, we also conduct ablative studies to evaluate some key component including the expression embedding model, correlation layer, and label transformation loss of our framework.
+For those components, we provide vanilla alternatives to evaluate the effectiveness of our design.
+It can be observed that our approach reaches the best performance of all the others, with top-1 prediction accuracy at 28:3%, top-5 accuracy at 66:4%, and top-10 accuracy at 78:7%.
+By our problem setting, we choose three popular pre-trained word embedding model, including Word2Vec [54], GloVe [55], and BERT [62], to study the corresponding correlations between emotion word semantics.
+It is interesting to find that, even if the actual label is not recognized as the top one, our model can still produce reasonable predictions that are semantically close to the ground-truth (in red).
+Furthermore, we employ the chosen word embedding model [54], [55] to calculate the semantic distances between the ground-truth label and our predictions/the rest of 135 emotion terms (See Table 4).
+This phenomenon TABLE 2 Quantitative Comparison Between our Method and the Other Approaches, Including Pre-Trained Backbones, Modified SOTAs, and Ablative Models Approach F1-Score Top-1 Acc.
+suggests that our analyzed semantic emotion relationship is helpful and reliable to improve the semantic richness of the FER results.
+The details of the performance of our SLSTT on different emotion categories are shown in Fig.
+As can be readily seen in Table 1 which presents a comprehensive overview of our experimental results in the SDE setting, the method proposed in the present paper performs best (n.b.
+What is more, in most cases our method outperforms rivals by a significant margin.
+Moving next to the results of our experiments in the CDE setting, these are summarized in Table 2.
+It can be readily seen that our method ’ s performance is again shown to be excellent.
+In particular, in most cases our method again comes out either at the top or second best (as before the former being shown in bold and the latter denoted by square brackets enclosure).
+To elaborate in further detail, our approach achieved the best results both in terms of UF1 and UAR on Fig.
+Confusion matrices corresponding to each of our experiments.
+It is insightful to observe that in contrast with the results in the SDE setting already discussed (see Table 1), our method does not come out as dominant in the context of CDE.
+This suggests an important conclusion, namely that our method is particularly capable of nuanced learning over finer grained classes and that its superiority is less able to come through in a simpler setting when only 3 emotional classes as used.
+The superiority of our short- and long-range relation based TABLE 1 SDE Results Comparison with LOSO on SMIC-HS (3 Classes), CASME II (5 Classes) and SAMM (5 Classes) SMIC-HS CASME II SAMM Acc (%) F1 Acc (%) F1 Acc (%) F1 Handcrafted LBP-TOP * 53.66 0.538 46.46 0.424 – – LBP-SIP * 44.51 0.449 46.56 0.448 – – STLBP-IP [66] (2015) 57.93 – 59.51 – – – STCLQP [64] (2015) 64.02 0.638 58.39 0.584 – – Hierarchical STLBP-IP [67] (2018) 60.37 0.613 – – – – HIGO+Mag [9] (2018) 68.29 – 67.21 – – – Deep Learning AlexNet * * 59.76 0.601 62.96 0.668 52.94 0.426 DSSN [65] (2019) 63.41 0.646 70.78 0.730 57.35 0.464 AU-GACN [18] (2020) – – 49.20 0.273 48.90 0.310 MER-GCN [16] (2020) – – 42.71 – – – Micro-attention [68] (2020) 49.40 0.496 65.90 0.539 48.50 0.402 Dynamic [69] (2020) 76.06 0.710 72.61 0.670 – – GEME [70] (2021) 64.63 0.616 [75.20] [0.735] 55.88 0.454 SLSTT-Mean (Ours) 73.17 [0.719] 73.79 0.723 [66.42] [0.547] SLSTT-LSTM (Ours) [75.00] 0.740 75.81 0.753 72.39 0.640 Best performances are shown in bold, second best by square brackets enclosure.
+spatiotemporal transformer is further corroborated by the results shown in the latest two rows in both Tables 1 and 2 which summarize our comparison of the proposed LSTM aggregator with the simpler mean operator aggregator.
+The micro-expression databases containing multi-modal signals [74], [75], which have begun emerging recently, seem promising in overcoming some of the limitations of the existing corpora, and we intend to make use of them in our future work.Following the cleanup process presented in Section 5.6, this Section performs a preliminary analysis of the clean version of the AGAIN dataset, focusing on patterns in the arousal annotations and the AGAIN game context features (see Section 6.1).
+In particular, this phenomenon would be beneficial for the realtime CER scenario, because our method only operates in the TABLE 2 The Statistics of the Used Datasets Dataset #dialogues #utterances Avg.
+We also implemented the DialogueGCN [13], but we find it easy to collapse during the model training phrase, so we do not include it as our baselines.
+This is in line with our expectation: when is too small, the model only focuses on the emotion classification task, so that our C3ER module has little impact on the emotion classification task; when is too large, the main task of the model will be ignored; therefore a moderate value tends to achieve a better effectiveness of emotion classification.
+6.6.1 Test Setting Since it is hard to quantify the context semantic consistency between target utterance and its conversational context, we follow the context-replacement approach used in our empirical study Section 4, to indirectly validate the performance of C3ER through perturbation tests by replacing the conversational context of the target utterance under different context-replacement modes.
+The experimental results prove that our C3ER method has a certain degree of versatility, which can help understand various types of conversational context and improve the backbone CER model ’ s performance.
+6.7 Case Study In order for a more intuitive understanding of the effect of our method, we select an example conversation from IEMOCAP as a case, to show how C3ER influences its attention in comparison with DialogueRnn, which correspond to a large performance improvement.
+The engagement values for the two types of games (game-RB and game-RL) were compared to get an objective assessment of our method ’ s performance.
+5.2.3 Discussion In the design of our experiment, the selection of baseline policy was an important factor.
+The rule-based policy employed in our user study, which is independent of user state, may look simple and repetitive.
+During our trial experiments, the users (blind to the policies) reported that they were unable to tell if there was a policy that triggered events at regular intervals.
+This technique is inherently part of our rule-based policy.
+However, our rule-based method offers some strengths over these baselines.
+In our baseline, it is ensured that backchannels are generated (on average twice a turn), irrespective of user ’ s state.
+Our final model contains information from three different modalities, and each modality is represented using feature vectors with various sizes.
+4) Our proposed IMAL achieved comparable performance with MT-iGS on all three datasets, since the sample selection criteria of these two approaches are both based on sample diversity.
+3) Our proposed IMAL outperformed MT-iGS slightly, but other AL approaches by a large margin.
+Our work (Exp.
+Our model can be applied to predict optical flow on any sets of frontal / near frontal faces.
+TABLE 5 Results of the Aggregated Performance Metrics With Their Deltas for Micro-Expression Recognition on the SAMM and SMIC Datasets Separately, Using TVL1 Optical Flow as Done in [8], Our Network With Different Variants, and the Other Optical Flow CNN Architectures The best results in each column are in bold blue font, the second best are underlined, and the third best are in blue italic font.
+Our choice of time windows and lag is motivated by best practices established by a long line of prior research [4], [8], [61], [69], [70], [71], [72], as well as empirical results of studies into AC research design.
+Our choice was based on the strengths and limitations of various previous techniques available in the literature.
